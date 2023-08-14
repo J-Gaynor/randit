@@ -1,0 +1,22 @@
+#header-container {
+    background-color: white;
+    display: inline-grid;
+    grid-template-columns: 1fr 15fr;
+    height: auto;
+    justify-content: flex-start;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+}
+
+h1 {
+    align-self: flex-end;
+    font-family: 'Verdana';
+    font-size: 32px;
+    margin: 0;
+}
+
+#logo {
+    padding: 1rem 0 0 4rem;
+    width: 2.5rem;
+}
