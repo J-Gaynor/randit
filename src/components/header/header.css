@@ -1,9 +1,11 @@
 #header-container {
     background-color: white;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
     display: inline-grid;
     grid-template-columns: 1fr 15fr;
     height: auto;
     justify-content: flex-start;
+    padding-bottom: 1rem;
     position: fixed;
     width: 100%;
     z-index: 1;
@@ -14,6 +16,14 @@ h1 {
     font-family: 'Verdana';
     font-size: 32px;
     margin: 0;
+}
+
+#page-name:visited {
+    color: black
+}
+
+#page-name:hover {
+    color: rgb(255, 69, 0);
 }
 
 #logo {

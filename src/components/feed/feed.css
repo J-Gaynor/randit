@@ -11,6 +11,11 @@ a:visited {
     color: darkgray;
 }
 
+#post-box {
+    background-color: rgb(243, 243, 243);
+    padding-bottom: 5rem;
+}
+
 #post-container {
     display: grid;
     grid-template-columns: 1fr;
@@ -21,10 +26,11 @@ a:visited {
 }
 
 .post {
-    background-color: rgb(243, 243, 243);
+    background-color: rgb(255, 255, 255);
     border-radius: 3px;
-    margin-top: 4rem;
+    margin-top: 5rem;
     margin-bottom: -3rem;
+    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 .post-media {
