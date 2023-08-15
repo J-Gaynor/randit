@@ -8,6 +8,25 @@ const FeedContainer = () => {
     const [error, setError] = useState();
     const [subreddits, setSubreddits] = useState([]);
 
+    const fetchPosts = async(subreddits) => {
+        console.log(subreddits)
+        const subIndex = generateIndex(subreddits);
+        const subreddit = subreddits[subIndex];
+        try {
+            const response = await fetch(`https://www.reddit.com/r/${subreddit.display_name}/top.json?t=week`);
+            const data = await response.json();
+            const postsList = data.data.children.map(child => child.data);
+            const filteredPostsList = postsList.filter((post) => !post.over18)
+            const postIndex = generateIndex(filteredPostsList);
+            const post = filteredPostsList[postIndex];
+            setPosts(prevPosts => [...prevPosts, post]);
+        } catch (error) {
+            const errorMessage = `Cannot load posts at this time, API limit reached. Please try again later.`
+            setError(errorMessage);
+        }
+        setLoading(false); // Set loading state to false after all posts are fetched
+    }
+
     useEffect(() => {
         fetchSubreddits()
     }, []);
@@ -33,25 +52,6 @@ const FeedContainer = () => {
             const errorMessage = `Cannot load subreddits at this time, API limit reached. Please try again later.`
             setError(errorMessage);
         }
-    }
-
-    const fetchPosts = async(subreddits) => {
-        console.log(subreddits)
-        const subIndex = generateIndex(subreddits);
-        const subreddit = subreddits[subIndex];
-        try {
-            const response = await fetch(`https://www.reddit.com/r/${subreddit.display_name}/top.json?t=week`);
-            const data = await response.json();
-            const postsList = data.data.children.map(child => child.data);
-            const filteredPostsList = postsList.filter((post) => !post.over18)
-            const postIndex = generateIndex(filteredPostsList);
-            const post = filteredPostsList[postIndex];
-            setPosts(prevPosts => [...prevPosts, post]);
-        } catch (error) {
-            const errorMessage = `Cannot load posts at this time, API limit reached. Please try again later.`
-            setError(errorMessage);
-        }
-        setLoading(false); // Set loading state to false after all posts are fetched
     }
     return (
         <Feed posts={posts} loading={loading} error={error} /> // Pass loading state to the Feed component
