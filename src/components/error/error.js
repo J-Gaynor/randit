@@ -5,7 +5,7 @@ import errorLogo from '../../randitError.png'
 const Error = ({error}) => {
     return (
         <div id='background-container'>
-            <img src={errorLogo} id='error-logo'/>
+            <img src={errorLogo} id='error-logo' alt='error'/>
             <h2 id='error-message'>{error}</h2>
         </div>
     )
