@@ -17,7 +17,7 @@ The feed is where all 10 posts are displayed for users to view. The feed contain
 retrieved and more. These states are used to control side effects controlled by useEffect. 
 
 - ### Error
-The error component is a UI solution to handle the 2023 restrictions on Reddit's API usage. Should the page fail to load either:
+The error component is a UI solution to handle the 2023 restrictions on Reddit's API usage. Should the page fail to load either:  
 	- subreddits.json
 	- posts.json
 then rather than returning a blank screen or an alert, an error message will appear with a customised app logo.
