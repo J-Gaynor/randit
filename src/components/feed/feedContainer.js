@@ -16,7 +16,7 @@ const FeedContainer = () => {
         if (subreddits.length > 0 && posts.length < 9) {
             fetchPosts(subreddits);
         }
-    }, [subreddits, posts]);
+    }, [subreddits, posts, fetchPosts]);
 
     const generateIndex = arr => {
         return (Math.floor(Math.random() * arr.length));

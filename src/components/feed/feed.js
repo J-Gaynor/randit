@@ -10,7 +10,7 @@ const Feed = ({ posts, error }) => {
                 </div>
                 {posts.map(post => (
                     <div key={post.id} className='post'>
-                        <a href={`https://www.reddit.com${post.permalink}`} target='_blank'><h2 id='post-title'>{post.title}</h2></a>
+                        <a href={`https://www.reddit.com${post.permalink}`} target='_blank' rel='noreferrer' ><h2 id='post-title'>{post.title}</h2></a>
                         {post.url_overridden_by_dest && post.post_hint === "image" && !post.is_video && !post.media_metadata && (
                             <img className='post-media' src={post.url_overridden_by_dest} alt={post.title} />
                         )}
