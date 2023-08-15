@@ -24,4 +24,4 @@ then rather than returning a blank screen or an alert, an error message will app
 
 
 ## Where can I view RANDIT?
-(Randit is available here, no log in required!)[]
+(Randit is available here, no log in required!)[randit-client.netlify.app]
