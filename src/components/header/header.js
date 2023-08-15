@@ -7,7 +7,7 @@ const Header = () => {
     return(
         <div id='header-container'>
             <img src={logo} alt='Randit logo' id='logo' />
-            <h1><a href='#' id='page-name'>RANDIT</a></h1>
+            <h1><a href='randitclient.netlify.app' id='page-name'>RANDIT</a></h1>
         </div>
     )
 }
