@@ -3,51 +3,58 @@ import './feed.css';
 import Feed from "./feed";
 
 const FeedContainer = () => {
-    // Declare a posts and setter variables.
     const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(true); // Set initial loading state
+    const [error, setError] = useState();
+    const [subreddits, setSubreddits] = useState([]);
 
     useEffect(() => {
-        fetchRedditPosts();
-    }, [posts]); // Empty dependency array indicates it runs only once    
+        fetchSubreddits()
+    }, []);
 
-    const fetchRedditPosts = async () => {
+    useEffect(() => {
+        if (subreddits.length > 0 && posts.length < 9) {
+            fetchPosts(subreddits);
+        }
+    }, [subreddits, posts]);
+
+    const generateIndex = arr => {
+        return (Math.floor(Math.random() * arr.length));
+    };
+
+    const fetchSubreddits = async() => {
         try {
             const response = await fetch('https://www.reddit.com/subreddits.json');
             const data = await response.json();
-
             const subredditList = data.data.children.map(child => child.data);
             const sfwSubreddits = subredditList.filter((subreddit) => !subreddit.over18);
-            generatePost(sfwSubreddits)
+            setSubreddits(sfwSubreddits);
         } catch (error) {
-            alert(`Unable to fetch subreddits at this time, please try again later. \n Error: ${error}`)
+            const errorMessage = `Cannot load subreddits at this time, API limit reached. Please try again later.`
+            setError(errorMessage);
         }
     }
-        
-    const generatePost = async sfwSubreddits => {
-        const randomPosts = []
 
-        for (let i = 0; i < 10; i++) {
-            const subIndex = Math.floor(Math.random() * sfwSubreddits.length);
-            const subreddit = sfwSubreddits[subIndex];
-            try {
-                //Get the top posts from the past week
-                const response = await fetch(`https://www.reddit.com/r/${subreddit.display_name}/top.json?t=week`);
-                const data = await response.json();
-                const postsList = data.data.children.map(child => child.data);
-                const postIndex = Math.floor(Math.random() * postsList.length);
-                const post = postsList[postIndex]
-                randomPosts.push(post)
-            } catch (error) {
-                alert(`Unable to fetch posts at this time, please try again later.\nError: ${error}`)
-            }
+    const fetchPosts = async(subreddits) => {
+        console.log(subreddits)
+        const subIndex = generateIndex(subreddits);
+        const subreddit = subreddits[subIndex];
+        try {
+            const response = await fetch(`https://www.reddit.com/r/${subreddit.display_name}/top.json?t=week`);
+            const data = await response.json();
+            const postsList = data.data.children.map(child => child.data);
+            const filteredPostsList = postsList.filter((post) => !post.over18)
+            const postIndex = generateIndex(filteredPostsList);
+            const post = filteredPostsList[postIndex];
+            setPosts(prevPosts => [...prevPosts, post]);
+        } catch (error) {
+            const errorMessage = `Cannot load posts at this time, API limit reached. Please try again later.`
+            setError(errorMessage);
         }
-        setPosts(randomPosts)
-        console.log(randomPosts)
+        setLoading(false); // Set loading state to false after all posts are fetched
     }
-
-
     return (
-        <Feed posts={posts} />
+        <Feed posts={posts} loading={loading} error={error} /> // Pass loading state to the Feed component
     )
 }
 
